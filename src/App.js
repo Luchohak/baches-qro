@@ -12,6 +12,8 @@ import MapComponent from './components/MapComponent';
 import Home from './components/Home';
 import CreateUserComponent from './components/CreateUserComponent';
 
+import ImageUpload from './components/ImageUpload';
+
 class App extends Component {
   render() {
     return (
@@ -21,12 +23,6 @@ class App extends Component {
             <a className="navbar-brand">Baches Qro</a>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                  <Link to={'/account/create'} className="nav-link">Crear Usuario</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/home'} className="nav-link">Iniciar Sesión</Link>
-                </li>
                 <li className="nav-item">
                   <Link to={'/report/create'} className="nav-link">Crear Reporte</Link>
                 </li>
@@ -37,7 +33,7 @@ class App extends Component {
                   <Link to={'/report/map'} className="nav-link">Mapa de Reportes</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/report/api'} className="nav-link">Consumir API</Link>
+                  <Link to={'/report/image'} className="nav-link">Subir imagen</Link>
                 </li>
 
               </ul>
@@ -52,6 +48,7 @@ class App extends Component {
               <Route path='/report/edit/:id' component={EditReport} />
               <Route path='/report/map' component={MapComponent} />
               <Route path='/report/api' component={APIComponent} />
+              <Route path='/report/image' component={ImageUpload} />
               
           </Switch>
         </div>

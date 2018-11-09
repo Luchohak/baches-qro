@@ -15,8 +15,8 @@ var PotholeReport = new Schema({
   state: {
     type: String, default: 'Por reparar'
   },
-  image: {
-    data: Buffer, contentType: String 
+  url: {
+    type: String 
   },
   description: {
     type: String 

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const PORT = 4200;
 const cors = require('cors');
 const config = require('./database/DB');
+const path = require('path');
 
 const ServerPortRouter = require('./routes/ServerPortRouter');
 const ServerReportRouter = require('./routes/ServerReportRouter');
@@ -25,6 +26,16 @@ app.use(bodyParser.json());
 app.use('/serverport', ServerPortRouter);
 app.use('/serverreport', ServerReportRouter);
 app.use('/serveruser', ServerUserRouter);
+
+//Serve static assets if in production 
+// if(process.env.NODE_ENV === 'production'){
+//   //Set static folder
+//   app.use(express.static('build'));
+
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'in'))
+//   })
+// } 
 
 app.listen(PORT, function(){
   console.log('Server is running on Port: ',PORT);

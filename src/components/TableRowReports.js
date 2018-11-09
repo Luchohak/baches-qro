@@ -17,19 +17,13 @@ class TableRowReports extends Component {
     return (
         <tr>
           <td>
-            {this.props.obj.user}
-          </td>
-          <td>
-            {this.props.obj.latitude}
-          </td>
-          <td>
-            {this.props.obj.longitude}
-          </td>
-          <td>
             {this.props.obj.state}
           </td>
           <td>
             {this.props.obj.description}
+          </td>
+          <td>
+            <img src={this.props.obj.url} />
           </td>
           <td>
           <Link to={"/report/edit/"+this.props.obj._id} className="btn btn-primary">Edit</Link>

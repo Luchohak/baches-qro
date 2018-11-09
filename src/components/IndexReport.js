@@ -30,11 +30,9 @@ export default class IndexReport extends Component {
             <table className="table table-striped">
               <thead>
                 <tr>
-                  <td>Usuario</td>
-                  <td>Latitud</td>
-                  <td>Longitud</td>
                   <td>Estado</td>
                   <td>Descripcion</td>
+                  <td>Imagen</td>
                 </tr>
               </thead>
               <tbody>

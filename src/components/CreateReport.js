@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { storage } from '../firebase/firebaseIndex';
 
 export class CreateReport extends Component {
 
@@ -15,6 +16,9 @@ export class CreateReport extends Component {
         this.getLongitude = this.getLongitude.bind(this);
         this.onMarkerPositionChanged = this.onMarkerPositionChanged.bind(this);
 
+        this.handleImageChange = this.handleImageChange.bind(this);
+        this.handleImageUpload = this.handleImageUpload.bind(this);
+
         this.onSubmit = this.onSubmit.bind(this);
         
         this.state = {
@@ -22,7 +26,10 @@ export class CreateReport extends Component {
             latitude: '',
             longitude: '',
             state: 'Por reparar',
-            description: ''
+            description: '',
+            image: null, 
+            url: '',
+            progress: 0
 
         }
     }
@@ -85,6 +92,7 @@ export class CreateReport extends Component {
             latitude: this.state.latitude,
             longitude: this.state.longitude,
             state: this.state.state,
+            url: this.state.url,
             description: this.state.description
             
         }
@@ -96,6 +104,9 @@ export class CreateReport extends Component {
             latitude: '',
             longitude: '',
             state: 'Por reparar',
+            url: '',
+            image: null,
+            progress: 0,
             description: ''
         })
     }
@@ -108,6 +119,35 @@ export class CreateReport extends Component {
         
     }
 
+    handleImageChange = e => {
+        if(e.target.files[0]){
+            const image = e.target.files[0];
+            this.setState(() => ({image}));
+            console.log('Imagen seleccionada')
+        }
+    }
+
+    handleImageUpload = () => {
+        const {image} = this.state;
+        const uploadTask = storage.ref(`images/${image.name}`).put(image);
+
+        uploadTask.on('state_changed', (snapshot) => {
+            //progress function
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+            console.log('Yes: ', progress);
+            this.setState({progress})
+        }, (error) => {
+            //error function
+            console.log('Error: ', error);
+        }, () => {
+            //complete function
+            storage.ref('images').child(image.name).getDownloadURL().then(url => {
+                console.log(url);
+                this.setState({url});
+            })
+        });
+    }
+
     render() {  
         
         if(navigator.geolocation){
@@ -115,14 +155,24 @@ export class CreateReport extends Component {
             navigator.geolocation.getCurrentPosition(this.getLongitude);
     
         }
+
+        const style = {
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+
+        if(this.state.image == null){
         return (
             <div style={{marginTop: 50}}>
                 <h3>Registrar nuevo bache</h3>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label>Usuario:  </label>
                         <input type="text" value={this.state.user} className="form-control" onChange={this.onChangeUser}/>
-                    </div>
+                    </div> */}
                     <div className="form-group">
                         <label>Latitud: </label>
                         <input type="text" value = {this.state.latitude} className="form-control" onChange={this.onChangeLatitude} readOnly/>
@@ -140,22 +190,33 @@ export class CreateReport extends Component {
                         <label>Descripcion: (opcional) </label>
                         <input type="text" value={this.state.description} className="form-control" onChange={this.onChangeDescription} placeholder="Agrega información extra si deseas"/>
                     </div>
+                    <div className='form-group'>
+                <progress value={this.state.progress} max="100"/>
+                <br />
+                <input type="file" className="form-control" onChange={this.handleImageChange}/>
+                <br />
+                <br />
+                <br />
+                <img src={this.state.url} />
+            </div>
                     <div className="form-group">
                         <input type="submit" value="Reportar" className="btn btn-primary"/>
                     </div>
                 </form>
+                
+                
                 <h4>Comprueba tu ubicación</h4>
                 <Map
                   google={this.props.google}
                   onDragend={this.centerMoved}
                   style={{
-                    width: "40%",
-                    height: "40%"
+                    width: "50%",
+                    height: "100%"
                   }}
-                  zoom={15}
+                  zoom={12}
                   initialCenter={{
-                    lat: 29.087481099999998,
-                    lng: -111.0038117
+                    lat: 20.588056,
+                    lng: -100.388056
                   }}
                 >
                   <Marker
@@ -168,12 +229,83 @@ export class CreateReport extends Component {
                   
 
                 </Map>
+                
             </div>
-            
-            
-            
-        )
-        
+                
+        );
+                }
+        if (this.state.image != null){
+            return (
+                <div style={{marginTop: 50}}>
+                    <h3>Registrar nuevo bache</h3>
+                    <form onSubmit={this.onSubmit}>
+                        {/* <div className="form-group">
+                            <label>Usuario:  </label>
+                            <input type="text" value={this.state.user} className="form-control" onChange={this.onChangeUser}/>
+                        </div> */}
+                        <div className="form-group">
+                            <label>Latitud: </label>
+                            <input type="text" value = {this.state.latitude} className="form-control" onChange={this.onChangeLatitude} readOnly/>
+                        </div>
+                        <div className="form-group">
+                            <label>Longitud: </label>
+                            <input type="text" value={this.state.longitude} className="form-control" onChange={this.onChangeLongitude} readOnly/>
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>Estado: </label>
+                            <input type="text" value={this.state.state} className="form-control" onChange={this.onChangeState} readOnly/>
+                        </div>
+                        <div className="form-group">
+                            <label>Descripcion: (opcional) </label>
+                            <input type="text" value={this.state.description} className="form-control" onChange={this.onChangeDescription} placeholder="Agrega información extra si deseas"/>
+                        </div>
+                        <div className='form-group'>
+                    <progress value={this.state.progress} max="100"/>
+                    <br />
+                    <input type="file" className="form-control" onChange={this.handleImageChange}/>
+                    <br />
+       
+                    <button onClick={this.handleImageUpload} type="button" className="btn btn-secondary">Confirmar imagen</button>
+                    <br />
+                    <br />
+                    <img src={this.state.url} />
+                </div>
+                        <div className="form-group">
+                            <input type="submit" value="Reportar" className="btn btn-primary"/>
+                        </div>
+                    </form>
+                    
+                    
+                    <h4>Comprueba tu ubicación</h4>
+                    <Map
+                      google={this.props.google}
+                      onDragend={this.centerMoved}
+                      style={{
+                        width: "40%",
+                        height: "40%"
+                      }}
+                      zoom={12}
+                      initialCenter={{
+                        lat: 20.588056,
+                        lng: -100.388056
+                      }}
+                    >
+                      <Marker
+                        name={'Current Location'}
+                        draggable = {true}
+                        position={{lat: this.state.latitude, lng: this.state.longitude}}
+                        //onDragend={(e) => {console.log('dragEnd', e.position.lat)}}
+                        //onDragend={this.onMarkerPositionChanged}
+                        />
+                      
+    
+                    </Map>
+                    
+                </div>
+                    
+            );
+        }
     }
     
 }
