@@ -6,8 +6,20 @@ import axios from 'axios';
 export class MapContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {serverreports: [],
+        this.state = {
+          serverreports: [],
+          showingInfoWindow: false,
+          activeMarker: {},
+          selectedPlace: {},
+          selectedCoordenates: {}
         };
+
+
+        this.handleToggleOpen = this.handleToggleOpen.bind(this);
+        this.handleToggleClose = this.handleToggleClose.bind(this);
+
+        this.onMarkerClick = this.onMarkerClick.bind(this);
+        this.onMapClick = this.onMapClick.bind(this);
 
       }
       componentDidMount(){
@@ -26,16 +38,67 @@ export class MapContainer extends Component {
            console.log(object.state)
         });
     }
+
+    handleToggleOpen = () => {
+
+      console.log('Abrir')
+      this.setState({
+        isOpen: true
+      });
+    }
+    
+    handleToggleClose = () => {
+      console.log('Cerrar')
+      this.setState({
+        isOpen: false
+      });
+    }
+
+    onMarkerClick = (props, marker, e) => {
+
+      //peticion get ?lat= props.position.lat
+      //             ?lng= props.position.lng
+      // axios.get('http://localhost:4200/serverreport/edit/'+this.props.match.params.id)
+      //     .then(response => {
+      //         this.setState({ user: response.data.user, latitude: response.data.latitude, longitude: response.data.longitude, state: response.data.state });
+      //     })
+      //     .catch(function (error) {
+      //         console.log(error);
+      //     })
+
+
+      console.log('marker: ', marker)
+      console.log('props: ', props)
+      this.setState({
+        selectedPlace: props,
+        activeMarker: marker,
+        showingInfoWindow: true,
+        selectedCoordenates: {
+          "lat" : props.position.lat,
+          "lng" : props.position.lng
+        }
+      });
+      console.log(this.state.selectedCoordenates);
+    }
+
+    onMapClick() {
+      if (this.state.showingInfoWindow) {
+        this.setState({
+          showingInfoWindow: false,
+          activeMarker: null
+        });
+      }
+    }
   
     render() {
     return (
         
         <Map google={this.props.google}
-        style={{width: '80%', height: '80%'}}
+        style={{width: '100%', height: '100%'}}
         //Once the map is loaded, it calls the OnReady method, we are using it to load the pothole markers
-        onClick = {this.onMapClicked}
+        onClick = {this.onMapClic}
         onReady = {this.addMarker}
-        zoom={15}
+        zoom={12}
         initialCenter={{
           lat: 20.5880600,
           lng: -100.3880600
@@ -48,11 +111,26 @@ export class MapContainer extends Component {
 
       {this.state.serverreports.map((object, i) => (
         <Marker
-        key = {object._id}
-        position={{lat: object.latitude, lng: object.longitude}}
-        draggable={false}
-        />
+          key = {object._id}
+          position={{lat: object.latitude, lng: object.longitude}}
+          draggable={false}
+          onClick={this.onMarkerClick}   
+        >
+        </Marker>
+        
       ))}
+
+
+
+          <InfoWindow
+            //key = {object._id}
+            marker={this.state.activeMarker}
+            visible={this.state.showingInfoWindow}>
+              <div>
+                <h5>Bache </h5>
+                {/* <img src={object.url} /> */}
+              </div>
+          </InfoWindow>
 
       </Map>
     );

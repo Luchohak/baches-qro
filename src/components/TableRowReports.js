@@ -14,23 +14,23 @@ class TableRowReports extends Component {
             .catch(err => console.log(err))
     }
   render() {
+    const style = {
+      width: '20%'
+    }
     return (
         <tr>
-          <td>
-            {this.props.obj.state}
-          </td>
           <td>
             {this.props.obj.description}
           </td>
           <td>
-            <img src={this.props.obj.url} />
+            {this.props.obj.state}
           </td>
-          <td>
+          {/* <td >
           <Link to={"/report/edit/"+this.props.obj._id} className="btn btn-primary">Edit</Link>
           </td>
           <td>
             <button onClick={this.delete} className="btn btn-danger">Delete</button>
-          </td>
+          </td> */}
         </tr>
     );
   }

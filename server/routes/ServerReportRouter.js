@@ -43,6 +43,7 @@ ServerReportRouter.route('/update/:id').post(function (req, res) {
       serverreport.latitude = req.body.latitude;
       serverreport.longitude = req.body.longitude;
       serverreport.state = req.body.state;
+      serverreport.description = req.body.description;
 
       serverreport.save().then(serverreport => {
           res.json('Update complete');

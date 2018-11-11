@@ -109,6 +109,7 @@ export class CreateReport extends Component {
             progress: 0,
             description: ''
         })
+        this.props.history.push('/report/map');
     }
     onMarkerPositionChanged(e) {
         console.log('Nueva lat:', e.position.lat, ' Nueva lng: ', e.position.lng)
@@ -187,30 +188,26 @@ export class CreateReport extends Component {
                         <input type="text" value={this.state.state} className="form-control" onChange={this.onChangeState} readOnly/>
                     </div>
                     <div className="form-group">
-                        <label>Descripcion: (opcional) </label>
-                        <input type="text" value={this.state.description} className="form-control" onChange={this.onChangeDescription} placeholder="Agrega información extra si deseas"/>
+                        <label>Calle: (opcional) </label>
+                        <input type="text" value={this.state.description} className="form-control" onChange={this.onChangeDescription} placeholder="Agrega la calle donde encontraste el bache"/>
                     </div>
                     <div className='form-group'>
-                <progress value={this.state.progress} max="100"/>
-                <br />
-                <input type="file" className="form-control" onChange={this.handleImageChange}/>
-                <br />
-                <br />
-                <br />
-                <img src={this.state.url} />
-            </div>
-                    <div className="form-group">
-                        <input type="submit" value="Reportar" className="btn btn-primary"/>
+                        <label>Tómale una foto al bache</label>
+                        <input type="file" className="form-control" onChange={this.handleImageChange}/>
+                        <br />
+                        <progress value={this.state.progress} max="100"/>
+                        <img src={this.state.url} />
                     </div>
                 </form>
                 
                 
                 <h4>Comprueba tu ubicación</h4>
+                <p>Si tu ubicación no aparece intenta refrescar la página</p>
                 <Map
                   google={this.props.google}
                   onDragend={this.centerMoved}
                   style={{
-                    width: "50%",
+                    width: "100%",
                     height: "100%"
                   }}
                   zoom={12}
@@ -234,7 +231,7 @@ export class CreateReport extends Component {
                 
         );
                 }
-        if (this.state.image != null){
+        if (this.state.image != null && this.state.url == ''){
             return (
                 <div style={{marginTop: 50}}>
                     <h3>Registrar nuevo bache</h3>
@@ -257,33 +254,30 @@ export class CreateReport extends Component {
                             <input type="text" value={this.state.state} className="form-control" onChange={this.onChangeState} readOnly/>
                         </div>
                         <div className="form-group">
-                            <label>Descripcion: (opcional) </label>
-                            <input type="text" value={this.state.description} className="form-control" onChange={this.onChangeDescription} placeholder="Agrega información extra si deseas"/>
+                            <label>Calle: (opcional) </label>
+                            <input type="text" value={this.state.description} className="form-control" onChange={this.onChangeDescription} placeholder="Agrega la calle donde encontraste el bache"/>
                         </div>
                         <div className='form-group'>
-                    <progress value={this.state.progress} max="100"/>
-                    <br />
-                    <input type="file" className="form-control" onChange={this.handleImageChange}/>
-                    <br />
-       
-                    <button onClick={this.handleImageUpload} type="button" className="btn btn-secondary">Confirmar imagen</button>
-                    <br />
-                    <br />
-                    <img src={this.state.url} />
-                </div>
-                        <div className="form-group">
-                            <input type="submit" value="Reportar" className="btn btn-primary"/>
-                        </div>
+                        <label>Tómale una foto al bache</label>
+                        <input type="file" className="form-control" onChange={this.handleImageChange}/>
+                        <br />
+                        <progress value={this.state.progress} max="100"/>
+                        <br/>
+                        <button onClick={this.handleImageUpload} type="button" className="btn btn-secondary">Confirmar imagen</button>
+                        <br />
+                        <img src={this.state.url} />
+                        </div>                
                     </form>
                     
                     
                     <h4>Comprueba tu ubicación</h4>
+                    <p>Si tu ubicación no aparece intenta refrescar la página</p>
                     <Map
                       google={this.props.google}
                       onDragend={this.centerMoved}
                       style={{
-                        width: "40%",
-                        height: "40%"
+                        width: "100%",
+                        height: "100%"
                       }}
                       zoom={12}
                       initialCenter={{
@@ -306,6 +300,97 @@ export class CreateReport extends Component {
                     
             );
         }
+        if (this.state.url != ''){
+            const style = {
+                border: '1px solid #ddd',
+                padding: '5px',
+                width: '100%',
+                height: '50%',
+                margin: 'auto',
+                display: 'block'
+                 };
+            
+         const imgStyle = {
+            width: '100%',
+            height: '100%',
+         }
+            return (
+                <div style={{marginTop: 50}}>
+                    <h3>Registrar nuevo bache</h3>
+                    <form onSubmit={this.onSubmit}>
+                        {/* <div className="form-group">
+                            <label>Usuario:  </label>
+                            <input type="text" value={this.state.user} className="form-control" onChange={this.onChangeUser}/>
+                        </div> */}
+                        <div className="form-group">
+                            <label>Latitud: </label>
+                            <input type="text" value = {this.state.latitude} className="form-control" onChange={this.onChangeLatitude} readOnly/>
+                        </div>
+                        <div className="form-group">
+                            <label>Longitud: </label>
+                            <input type="text" value={this.state.longitude} className="form-control" onChange={this.onChangeLongitude} readOnly/>
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>Estado: </label>
+                            <input type="text" value={this.state.state} className="form-control" onChange={this.onChangeState} readOnly/>
+                        </div>
+                        <div className="form-group">
+                            <label>Calle: (opcional) </label>
+                            <input type="text" value={this.state.description} className="form-control" onChange={this.onChangeDescription} placeholder="Agrega la calle donde encontraste el bache"/>
+                        </div>
+                        <div className='form-group'>
+                        <label>Tómale una foto al bache</label>
+                        <input type="file" className="form-control" onChange={this.handleImageChange}/>
+                        <br />
+                        <progress value={this.state.progress} max="100"/>
+                        <br/>
+                        <button onClick={this.handleImageUpload} type="button" className="btn btn-secondary">Confirmar imagen</button>
+                        <br />
+                        </div>  
+                        <div className='form-group' style={style}>
+                                <img style={imgStyle} src={this.state.url} />
+                        </div>
+                        <br/>                
+                        <div className="form-group">
+                            <input type="submit" value="Reportar" className="btn btn-primary"/>
+                        </div>
+                    </form>
+                    
+                    <div className='container'>
+                    <h4>Comprueba tu ubicación</h4>
+                    <p>Si tu ubicación no aparece intenta refrescar la página</p>
+                    <Map
+                      google={this.props.google}
+                      onDragend={this.centerMoved}
+                      style={{
+                        width: "100%",
+                        height: "100%"
+                      }}
+                      zoom={12}
+                      initialCenter={{
+                        lat: 20.588056,
+                        lng: -100.388056
+                      }}
+                    >
+                      <Marker
+                        name={'Current Location'}
+                        draggable = {true}
+                        position={{lat: this.state.latitude, lng: this.state.longitude}}
+                        //onDragend={(e) => {console.log('dragEnd', e.position.lat)}}
+                        //onDragend={this.onMarkerPositionChanged}
+                        />
+                      
+    
+                    </Map>
+                    </div>
+                </div>
+                    
+            );
+        }
+
+
+
     }
     
 }

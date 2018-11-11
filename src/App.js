@@ -9,18 +9,21 @@ import EditReport from './components/EditReport';
 import IndexReport from './components/IndexReport';
 import MapComponent from './components/MapComponent';
 
-import Home from './components/Home';
 import CreateUserComponent from './components/CreateUserComponent';
+import ViewReportComponent from './components/ViewReportComponent';
 
-import ImageUpload from './components/ImageUpload';
+import GalleryComponent from './components/GalleryComponent';
+import HomeComponent from './components/HomeComponent';
+
 
 class App extends Component {
   render() {
+
     return (
     <Router>
         <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a className="navbar-brand">Baches Qro</a>
+            <Link to={'/home'}><a className="navbar-brand">Baches Qro</a></Link>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
@@ -30,17 +33,15 @@ class App extends Component {
                   <Link to={'/report/index'} className="nav-link">Reportes</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/report/map'} className="nav-link">Mapa de Reportes</Link>
+                  <Link to={'/report/gallery'} className="nav-link">Galería de Baches</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/report/image'} className="nav-link">Subir imagen</Link>
+                  <Link to={'/report/map'} className="nav-link">Mapa de Reportes</Link>
                 </li>
-
               </ul>
-            </div>
+            </div>            
           </nav>
           <Switch>
-              <Route path='/home' component={Home} />
               <Route path='/account/create' component={CreateUserComponent} />
 
               <Route path='/report/create' component={CreateReport} />
@@ -48,7 +49,12 @@ class App extends Component {
               <Route path='/report/edit/:id' component={EditReport} />
               <Route path='/report/map' component={MapComponent} />
               <Route path='/report/api' component={APIComponent} />
-              <Route path='/report/image' component={ImageUpload} />
+              <Route path='/report/gallery' component={GalleryComponent} />
+              <Route path='/report/view/:id' component={ViewReportComponent} />
+              <Route path='/home' component={HomeComponent} />
+
+
+
               
           </Switch>
         </div>

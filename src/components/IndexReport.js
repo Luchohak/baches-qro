@@ -25,14 +25,16 @@ export default class IndexReport extends Component {
 
     render() {
       console.log(this.tabRow())
+      const style = {
+        overflowX: 'auto'
+      }
       return (
-        <div className="container">
+        <div className="container" style={style}>
             <table className="table table-striped">
               <thead>
                 <tr>
+                  <td>Calles</td>
                   <td>Estado</td>
-                  <td>Descripcion</td>
-                  <td>Imagen</td>
                 </tr>
               </thead>
               <tbody>

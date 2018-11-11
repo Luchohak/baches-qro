@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-export default class EditReport extends Component {
+export default class ViewReportComponent extends Component {
 
     constructor(props) {
         super(props);
-        this.onChangeUser = this.onChangeUser.bind(this);
         this.onChangeLatitude = this.onChangeLatitude.bind(this);
         this.onChangeLongitude = this.onChangeLongitude.bind(this);
         this.onChangeState = this.onChangeState.bind(this);
@@ -26,59 +25,37 @@ export default class EditReport extends Component {
             })
         }
 
-    onChangeUser(e) {
-        this.setState({
-            user: e.target.value
-        });
-    }
-    onChangeLatitude(e) {
-        this.setState({
-            latitude: e.target.value
-        });
-    }
-    onChangeLongitude(e) {
-        this.setState({
-            longitude: e.target.value
-        });
-    }
-    onChangeState(e) {
-        this.setState({
-            state: e.target.value
-        });
-    }
-
-    onChangeDescription(e) {
-        this.setState({
-            description: e.target.value
-        });
-    }
-
+        onChangeLatitude(e) {
+            this.setState({
+                latitude: e.target.value
+            });
+        }
+        onChangeLongitude(e) {
+            this.setState({
+                longitude: e.target.value
+            });
+        }
+        onChangeState(e) {
+            this.setState({
+                state: e.target.value
+            });
+        }
+    
+        onChangeDescription(e) {
+            this.setState({
+                description: e.target.value
+            });
+        }
 
     onSubmit(e) {
         e.preventDefault();
-        const serverreport = {
-            user: this.state.user,
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
-            state: this.state.state,
-            description: this.state.description
-        }
-        axios.post('http://localhost:4200/serverreport/update/'+this.props.match.params.id, serverreport)
-        .then(res => console.log(res.data));
-        this.setState({
-            user: '',
-            latitude: '',
-            longitude: '',
-            state: '',
-            description: ''
-        })
-        this.props.history.push('/report/index');
+        this.props.history.push('/report/gallery');
     }
 
     render() {
         return (
             <div style={{marginTop: 50}}>
-                <h3>Editar Reporte</h3>
+                <h3>Detalle</h3>
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">
@@ -91,14 +68,14 @@ export default class EditReport extends Component {
                     </div>
                     <div className="form-group">
                         <label>Estado: </label>
-                        <input type="text" value={this.state.state} className="form-control" onChange={this.onChangeState}/>
+                        <input type="text" value={this.state.state} className="form-control" onChange={this.onChangeState} readOnly/>
                     </div>
                     <div className="form-group">
-                        <label>Calle: </label>
-                        <input type="text" value={this.state.description} className="form-control" onChange={this.onChangeDescription}/>
+                        <label>Descripción: </label>
+                        <input type="text" value={this.state.description} className="form-control" onChange={this.onChangeDescription} readOnly/>
                     </div>
                     <div className="form-group">
-                        <input type="submit" value="Actualizar" className="btn btn-primary"/>
+                        <input type="submit" value="Regresar" className="btn btn-primary"/>
                     </div>
                 </form>
             </div>
