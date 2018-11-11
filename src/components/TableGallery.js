@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Gallery from 'react-grid-gallery';
-import { render } from 'react-dom';
+
 
 
 class TableGallery extends Component {
-    constructor(props) {
-        super(props);
-    }
 
   render() {
       const style = {
@@ -23,14 +19,11 @@ class TableGallery extends Component {
             width: '100%',
             height: '100%',
          }
-         const buttonStyle = {
-             position: 'absolute'
-         }
 
     return ( 
         <div style={style}>
         <figure >
-             <img style={imgStyle} src={this.props.obj.url} />
+             <img style={imgStyle} src={this.props.obj.url} alt='Imagen de Bache'/>
 
              <figcaption>
                 <br></br>

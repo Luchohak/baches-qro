@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 class TableRowReports extends Component {
@@ -14,9 +13,6 @@ class TableRowReports extends Component {
             .catch(err => console.log(err))
     }
   render() {
-    const style = {
-      width: '20%'
-    }
     return (
         <tr>
           <td>

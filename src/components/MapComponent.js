@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import TableRowReports from './TableRowReports';
 import axios from 'axios';
 
 export class MapContainer extends Component {
@@ -33,11 +32,6 @@ export class MapContainer extends Component {
         })
       }
 
-      tabRow(){
-        return this.state.serverreports.map(function(object, i){
-           console.log(object.state)
-        });
-    }
 
     handleToggleOpen = () => {
 
@@ -55,18 +49,6 @@ export class MapContainer extends Component {
     }
 
     onMarkerClick = (props, marker, e) => {
-
-      //peticion get ?lat= props.position.lat
-      //             ?lng= props.position.lng
-      // axios.get('http://localhost:4200/serverreport/edit/'+this.props.match.params.id)
-      //     .then(response => {
-      //         this.setState({ user: response.data.user, latitude: response.data.latitude, longitude: response.data.longitude, state: response.data.state });
-      //     })
-      //     .catch(function (error) {
-      //         console.log(error);
-      //     })
-
-
       console.log('marker: ', marker)
       console.log('props: ', props)
       this.setState({

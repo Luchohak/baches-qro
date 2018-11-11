@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { storage } from '../firebase/firebaseIndex';
 
 export class CreateReport extends Component {
@@ -157,14 +157,6 @@ export class CreateReport extends Component {
     
         }
 
-        const style = {
-            height: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
-        };
-
         if(this.state.image == null){
         return (
             <div style={{marginTop: 50}}>
@@ -196,7 +188,6 @@ export class CreateReport extends Component {
                         <input type="file" className="form-control" onChange={this.handleImageChange}/>
                         <br />
                         <progress value={this.state.progress} max="100"/>
-                        <img src={this.state.url} />
                     </div>
                 </form>
                 
@@ -231,7 +222,7 @@ export class CreateReport extends Component {
                 
         );
                 }
-        if (this.state.image != null && this.state.url == ''){
+        if (this.state.image !== null && this.state.url === ''){
             return (
                 <div style={{marginTop: 50}}>
                     <h3>Registrar nuevo bache</h3>
@@ -265,7 +256,6 @@ export class CreateReport extends Component {
                         <br/>
                         <button onClick={this.handleImageUpload} type="button" className="btn btn-secondary">Confirmar imagen</button>
                         <br />
-                        <img src={this.state.url} />
                         </div>                
                     </form>
                     
@@ -300,7 +290,7 @@ export class CreateReport extends Component {
                     
             );
         }
-        if (this.state.url != ''){
+        if (this.state.url !== ''){
             const style = {
                 border: '1px solid #ddd',
                 padding: '5px',
@@ -349,7 +339,7 @@ export class CreateReport extends Component {
                         <br />
                         </div>  
                         <div className='form-group' style={style}>
-                                <img style={imgStyle} src={this.state.url} />
+                                <img style={imgStyle} src={this.state.url} alt='Imagen de bache'/>
                         </div>
                         <br/>                
                         <div className="form-group">
