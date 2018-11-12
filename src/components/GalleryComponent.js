@@ -10,7 +10,7 @@ export default class GalleryComponent extends Component {
         };
     }
     componentDidMount(){
-        axios.get('http://localhost:4200/serverreport')
+        axios.get('https://vast-cove-91420.herokuapp.com/serverreport')
         .then(response => {
           this.setState({ serverreports: response.data });
         })

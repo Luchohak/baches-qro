@@ -8,7 +8,7 @@ class TableRowReports extends Component {
     }
     delete() {
       alert('Reporte eliminado')
-        axios.get('http://localhost:4200/serverreport/delete/'+this.props.obj._id)
+        axios.get('https://vast-cove-91420.herokuapp.com/serverreport/delete/'+this.props.obj._id)
             .then(console.log('Deleted'))
             .catch(err => console.log(err))
     }

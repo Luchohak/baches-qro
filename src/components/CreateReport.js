@@ -96,7 +96,7 @@ export class CreateReport extends Component {
             description: this.state.description
             
         }
-        axios.post('http://localhost:4200/serverreport/add', potholereport)
+        axios.post('https://vast-cove-91420.herokuapp.com/serverreport/add', potholereport)
         .then(res => console.log(res.data));
         alert('Reporte registrado, muchas gracias!')
         this.setState({

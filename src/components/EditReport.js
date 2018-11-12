@@ -17,7 +17,7 @@ export default class EditReport extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4200/serverreport/edit/'+this.props.match.params.id)
+        axios.get('https://vast-cove-91420.herokuapp.com/serverreport/edit/'+this.props.match.params.id)
             .then(response => {
                 this.setState({ user: response.data.user, latitude: response.data.latitude, longitude: response.data.longitude, state: response.data.state, description: response.data.description });
             })
