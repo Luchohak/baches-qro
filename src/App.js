@@ -18,7 +18,7 @@ class App extends Component {
     <Router>
         <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link to={'/home'} className="navbar-brand"> Baches Qro</Link>
+            <Link to={'/'} className="navbar-brand"> Baches Qro</Link>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
@@ -43,7 +43,7 @@ class App extends Component {
               <Route path='/report/map' component={MapComponent} />
               <Route path='/report/gallery' component={GalleryComponent} />
               <Route path='/report/view/:id' component={ViewReportComponent} />
-              <Route path='/home' component={HomeComponent} />
+              <Route path='/' component={HomeComponent} />
           </Switch>
         </div>
       </Router>
