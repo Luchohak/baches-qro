@@ -76,14 +76,14 @@ export class MapContainer extends Component {
     return (
         
         <Map google={this.props.google}
-        style={{width: '100%', height: '100%'}}
+        style={{width: '90%', height: '80%'}}
         //Once the map is loaded, it calls the OnReady method, we are using it to load the pothole markers
-        onClick = {this.onMapClic}
+        onClick = {this.onMapClick}
         onReady = {this.addMarker}
-        zoom={12}
+        zoom={14}
         initialCenter={{
-          lat: 20.5880600,
-          lng: -100.3880600
+          lat: 20.613787,
+          lng: -100.404910
         }}
       >
 

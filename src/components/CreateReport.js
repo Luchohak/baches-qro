@@ -98,7 +98,6 @@ export class CreateReport extends Component {
         }
         axios.post('https://vast-cove-91420.herokuapp.com/serverreport/add', potholereport)
         .then(res => console.log(res.data));
-        alert('Reporte registrado, muchas gracias!')
         this.setState({
             user: '',
             latitude: '',
@@ -110,6 +109,7 @@ export class CreateReport extends Component {
             description: ''
         })
         this.props.history.push('/report/map');
+        alert('Reporte registrado, muchas gracias!');
     }
     onMarkerPositionChanged(e) {
         console.log('Nueva lat:', e.position.lat, ' Nueva lng: ', e.position.lng)
@@ -130,7 +130,8 @@ export class CreateReport extends Component {
 
     handleImageUpload = () => {
         const {image} = this.state;
-        const uploadTask = storage.ref(`images/${image.name}`).put(image);
+        const imgName = new Date().getTime() + image.name;
+        const uploadTask = storage.ref(`images/${imgName}`).put(image);
 
         uploadTask.on('state_changed', (snapshot) => {
             //progress function
@@ -142,7 +143,7 @@ export class CreateReport extends Component {
             console.log('Error: ', error);
         }, () => {
             //complete function
-            storage.ref('images').child(image.name).getDownloadURL().then(url => {
+            storage.ref('images').child(imgName).getDownloadURL().then(url => {
                 console.log(url);
                 this.setState({url});
             })
@@ -198,10 +199,10 @@ export class CreateReport extends Component {
                   google={this.props.google}
                   onDragend={this.centerMoved}
                   style={{
-                    width: "100%",
-                    height: "100%"
+                    width: "90%",
+                    height: "90%"
                   }}
-                  zoom={12}
+                  zoom={13}
                   initialCenter={{
                     lat: 20.588056,
                     lng: -100.388056
@@ -266,10 +267,10 @@ export class CreateReport extends Component {
                       google={this.props.google}
                       onDragend={this.centerMoved}
                       style={{
-                        width: "100%",
-                        height: "100%"
+                        width: "90%",
+                        height: "90%"
                       }}
-                      zoom={12}
+                      zoom={13}
                       initialCenter={{
                         lat: 20.588056,
                         lng: -100.388056
@@ -354,10 +355,10 @@ export class CreateReport extends Component {
                       google={this.props.google}
                       onDragend={this.centerMoved}
                       style={{
-                        width: "100%",
-                        height: "100%"
+                        width: "90%",
+                        height: "90%"
                       }}
-                      zoom={12}
+                      zoom={13}
                       initialCenter={{
                         lat: 20.588056,
                         lng: -100.388056
