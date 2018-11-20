@@ -12,6 +12,7 @@
     "express-stormpath": "^4.0.0",
     "firebase": "^5.5.7",
     "google-maps-react": "^2.0.2",
+    "history": "^4.7.2",
     "mongoose": "^5.3.6",
     "nodemon": "^1.18.4",
     "react": "^16.5.2",

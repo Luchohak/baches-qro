@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Router, Switch, Route, Link } from 'react-router-dom';
+import history from './history';
 
 import CreateReport from './components/CreateReport';
 import EditReport from './components/EditReport';
@@ -15,7 +16,7 @@ class App extends Component {
   render() {
 
     return (
-    <Router>
+    <Router history={history}>
         <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <Link to={'/'} className="navbar-brand"> Baches Qro</Link>
